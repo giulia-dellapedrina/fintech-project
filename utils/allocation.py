@@ -1,7 +1,7 @@
 import json
 
 def check_input(file):
-    
+
     if file.endswith('.txt'):
         d = {}
         with open(file) as f:
@@ -26,16 +26,45 @@ def define_groups(d):
     print("There are", len(teams), "candidates and", len(voters), "applicants")
     return teams, voters
 
+def sort_dictionary(d):
+    
+    sorted_dict = dict(sorted(data.items(), key=lambda item: item[1], reverse=True))     
+    return sorted_dict
 
-def easy_assignment():
-    # returns groups based on sum of preferences and selcets random people for assignment if equal
-    return 
+def easy_assignment(data, team_limit):
+    '''returns groups based on sum of preferences and selects alphabthical order if score is equal'''
+
+    sorted_dict = sort_dictionary(data)
+    teams, voters = define_groups(data)
+    assignments = {k: [] for k in teams}
+    assigned = []
+    for key, value in sorted_dict.items():
+        team = key.split('_')[0]
+        voter = key.split('_')[1]
+
+        # Check if voter has already been assigned
+        if voter in assigned: 
+            print(voter, "has already been assigned to a team")
+
+        # Check if team capacity has been reached
+        elif len(assignments[team]) >= team_limit:
+            print(team, "has reached maximum capacity")
+
+        # Assign voter to the team
+        else:
+            assignments[team].append(voter)
+            assigned.append(voter)
+    
+    return assignments
 
 
 def normal_assignment():
-    # returns groups based on sum of preferences and prioritizes candidates when equal. If equal again then random
+    """ returns groups based on sum of preferences and prioritizes candidates when equal. If equal again then random """ 
+    
     return 
 
+
 def complex_assignment():
-    # returns groups based overall satisfaction optimization
+    """ returns groups based overall satisfaction optimization """
+    
     return 
