@@ -10,7 +10,7 @@ import sys
 contract_addr=sys.argv[1]
 w3,sorting_contract=Ass_vote(contract_addr) 
 
-vote_app2=Flask(__name__,static_folder='static2',template_folder='templates2')
+vote_app2=Flask(__name__,static_folder='static',template_folder='templates2')
 
 @vote_app2.route('/')
 def welcome():
