@@ -1,4 +1,4 @@
-from ass_vote2 import Ass_vote
+from utils.ass_vote_utils import two_ways_ass_vote
 from flask import Flask,render_template,request,redirect,send_from_directory
 from collections import defaultdict
 from web3 import Web3
@@ -7,20 +7,21 @@ import time
 import os
 import sys
 
+# Initialize variables
 contract_addr=sys.argv[1]
-w3,sorting_contract=Ass_vote(contract_addr) 
+w3,sorting_contract = two_ways_ass_vote(contract_addr)
+vote_app=Flask(__name__,static_folder='templates/static',template_folder='templates/two_ways_ballot')
 
-vote_app2=Flask(__name__,static_folder='static',template_folder='templates2')
-
-@vote_app2.route('/')
+# Run Application
+@vote_app.route('/')
 def welcome():
     return render_template('content.html')
 
-@vote_app2.route('/favicon.ico')
+@vote_app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(vote_app2.root_path,'static'),'favicon.ico')
+    return send_from_directory(os.path.join(vote_app.root_path,'static'),'favicon.ico')
 
-@vote_app2.route('/ballot_status.html')
+@vote_app.route('/ballot_status.html')
 def ballot_status():
     #voter_info
     num_voters=sorting_contract.functions.num_voters().call()
@@ -39,7 +40,7 @@ def ballot_status():
     res_list=[[k,sum(v.values())] for k,v in res.items()]
     return render_template('ballot_status.html',data=res_list)
     
-@vote_app2.route('/login.html',methods=['POST','GET'])
+@vote_app.route('/login.html',methods=['POST','GET'])
 def login():
     if request.method=='GET':
        return render_template('login.html',error_message='')
@@ -82,7 +83,7 @@ def login():
                 return redirect(redirect_addr)
 
 
-@vote_app2.route('/voter/<addr>',methods=['POST','GET'])
+@vote_app.route('/voter/<addr>',methods=['POST','GET'])
 def voter_vote(addr):
     num_options=sorting_contract.functions.num_options().call()
     option_names=[sorting_contract.functions.Options(i).call() for i in range(num_options)]
@@ -114,7 +115,7 @@ def voter_vote(addr):
         
         return render_template('vote_done.html')
 
-@vote_app2.route('/leader/<addr>',methods=['POST','GET'])
+@vote_app.route('/leader/<addr>',methods=['POST','GET'])
 def leader_vote(addr):
     #leader_info
     leader_info=sorting_contract.functions.Leaders(addr).call()
@@ -157,4 +158,4 @@ def leader_vote(addr):
         return render_template('vote_done.html')
     
 if __name__=='__main__':
-    vote_app2.run()
+    vote_app.run()
