@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Current Ballot Status</title>
+        <!--introduce echarts-->
+        <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="ballot status" style="width: 600px;height:400px;"></div>
+        <script type="text/javascript">
+            $.getJSON("static/data/ballot_status.json", d=>{
+                //ballot status 
+                //ballot_data=d.map(s=>({option:s[0],count:s[1]}))
+                console.log(d);
+                var options=d.map(s=>s[0]);
+                var counts=d.map(s=>s[1]);
+                //initialization of echarts obj
+                var myChart=echarts.init(document.getElementById('ballot status'), 'light');
+
+                //console.log(options);
+                var Series=[];
+                for(var i=0;i<options.length;i++){ //use .length is not perfect though..
+                    var item={
+                        name:options[i],
+                        type:"bar",
+                        data:[counts[i]]
+                    };
+                    Series.push(item);
+                }
+                //set option
+                option={
+                    title:{text:"Ballot status",
+                            x:'left',
+                            textStyle:{fontSize:30,fontWeight:'bolder',color:'#333'}},
+                    tooltip:{},
+                    legend:{x:"right",y:"top",data:options},
+                    xAxis:[{type:"category",name:"Options",nameLocation:"middle"}],
+                    yAxis:[{type:"value",name:"#Points",nameLocation:"middle"}],
+                    // series:[{name:options[0],type:"bar",data:[counts[0]]},
+                    // {name:options[1],type:"bar",data:[counts[1]]},
+                    // {name:options[2],type:"bar",data:[counts[2]]},
+                    // {name:options[3],type:"bar",data:[counts[3]]}]
+                    series:Series
+                };
+                
+                myChart.setOption(option);
+
+
+            })
+        </script>
+    </body>
+</html>
