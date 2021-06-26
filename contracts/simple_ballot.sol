@@ -55,7 +55,7 @@ contract Ballot{
         return sum;
     }
     
-    function Vote(uint[] memory option_idx,uint[] memory point_allocation) public{
+    function Vote(uint[] memory option_idx,uint[] memory point_allocation,uint key) public{
         //option_idx: voter's decision about to choose which options
         //point_allocation: how to allocation the N points to above options
         
@@ -71,10 +71,16 @@ contract Ballot{
         v.voted=true;
         //v.voter_addr=msg.sender;
         v.proposal_idx=option_idx;
-
-        for(uint i=0;i<option_idx.length;i++){
-            Options[option_idx[i]].count+=point_allocation[i];
+        
+        for(uint j=0;j<Options.length;j++){
+            uint hash;
+            hash = keccak256(abi.encodePacked(Option.name[j],key)); // here there is an error
+            for(uint i=0;i<option_idx.length;i++){
+                require(option_idx[i] == hash);
+                Options[option_idx[i]].count+=point_allocation[i];
+            }
         }
+        
     }
 
 }
