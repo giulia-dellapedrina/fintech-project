@@ -69,7 +69,8 @@ def vote(addr):
             elif int(point)>0:
                 vote_info[i]=int(point)
     
-    option_idx=list(map(lambda x:int(x),vote_info.keys()))
+    #option_idx=list(map(lambda x:int(x),vote_info.keys()))
+    option_idx = list(map(lambda x: w3.soliditySha3(['string','uint'], [x, key]),vote_info.keys())) #need to check for the correct datatypes and function
     point_allocation=list(vote_info.values())
 
  
