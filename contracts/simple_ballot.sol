@@ -72,12 +72,12 @@ contract Ballot{
         //v.voter_addr=msg.sender;
         v.proposal_idx=option_idx;
         
-        for(uint j=0;j<Options.length;j++){
+        for(uint j=0;j<num_options;j++){
             uint hash;
-            hash = keccak256(abi.encodePacked(Option.name[j],key)); // here there is an error
+            hash = uint(keccak256(abi.encodePacked(Options[j].name,key)));
             for(uint i=0;i<option_idx.length;i++){
                 require(option_idx[i] == hash);
-                Options[option_idx[i]].count+=point_allocation[i];
+                Options[option_idx[i]].count+=point_allocation[i]; // need to check here, since option_idx would no longer be a number but a hash and therefore this index woulndt work
             }
         }
         
