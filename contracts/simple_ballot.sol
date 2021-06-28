@@ -76,10 +76,10 @@ contract Ballot{
             uint hash;
             hash = uint(keccak256(abi.encodePacked(Options[j].name,key)));
             for(uint i=0;i<option_idx.length;i++){
-                require(option_idx[i] == hash);
-                Options[option_idx[i]].count+=point_allocation[i]; // need to check here, since option_idx would no longer be a number but a hash and therefore this index woulndt work
-            }
-        }
+                if (option_idx[i] == hash){
+                    Options[j].count+=point_allocation[i]; // check needed
+                }
+        }   }
         
     }
 
