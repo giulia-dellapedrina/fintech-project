@@ -71,9 +71,9 @@ def vote(addr):
     key = request.form.get('Key')
     if key:
         if not key.isdigit():
-            return render_template('vote.html',data=key,error_message='Wrong input type,Only integers are accepted!')
+            return render_template('vote.html',error_message='Wrong input type,Only integers are accepted!')
         elif not(len(key)==5):
-            return render_template('vote.html',data=key,error_message='Peronal key must be 5 characters long!')
+            return render_template('vote.html',error_message='Peronal key must be 5 characters long!')
 
     
     #option_idx=list(map(lambda x:int(x),vote_info.keys()))
