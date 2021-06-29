@@ -1,4 +1,5 @@
-from utils.ass_vote_utils import two_ways_ass_vote
+from utils.assign_vote_utils import two_ways_assign_vote
+from utils.allocation_utils import define_groups
 from flask import Flask,render_template,request,redirect,send_from_directory
 from collections import defaultdict
 from web3 import Web3
@@ -9,7 +10,7 @@ import sys
 
 # Initialize variables
 contract_addr=sys.argv[1]
-w3,sorting_contract = two_ways_ass_vote(contract_addr)
+w3,sorting_contract = two_ways_assign_vote(contract_addr)
 vote_app=Flask(__name__,static_folder='templates/static',template_folder='templates/two_ways_ballot')
 
 # Run Application
@@ -36,9 +37,10 @@ def ballot_status():
         for option in options:
             res[name+'-'+option]['voter2option']=sorting_contract.functions.voter_option_match(name,option).call()[1]
             res[name+'-'+option]['option2voter']=sorting_contract.functions.option_voter_match(option,name).call()[1]
-   
+    
     res_list=[[k,sum(v.values())] for k,v in res.items()]
-    return render_template('ballot_status.html',data=res_list)
+    teams, voters, teams_allocation_list = define_groups(res_list, 2)
+    return render_template('ballot_status.html',data=teams_allocation_list, res=res_list)
     
 @vote_app.route('/login.html',methods=['POST','GET'])
 def login():

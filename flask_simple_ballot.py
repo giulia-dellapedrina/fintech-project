@@ -1,4 +1,4 @@
-from utils.ass_vote_utils import one_way_ass_vote
+from utils.assign_vote_utils import one_way_assign_vote
 from flask import Flask,render_template,request,redirect,send_from_directory
 from collections import defaultdict
 from web3 import Web3
@@ -9,7 +9,7 @@ import sys
 
 # Initialize variables
 contract_addr=sys.argv[1]
-w3,vote_contract = one_way_ass_vote(contract_addr)
+w3,vote_contract = one_way_assign_vote(contract_addr)
 vote_app=Flask(__name__,static_folder='templates/static',template_folder='templates/one_way_ballot')
 
 # Run Application

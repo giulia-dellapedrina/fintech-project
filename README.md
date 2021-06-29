@@ -21,7 +21,7 @@ Simple Ballot
 >Change the Remix IDE environment to **Web3 Provider**  and enter the Ganache default server address:HTTP://127.0.0.1:7545, then you can find that the account addresses listed on Remix page correspond to the nodes in your Ganache local environment.   
 
 >Next you can choose the **first** account in the list(which will then be the constructor of the contract, who has the right to assign vote to voters) to deploy the smart contract(need to pass the parameter---optionNames. For example,["a","b","c"]). 
->>Of course you can also select another account you prefer, but then you need to change the constructor address in **ass_vote_utils.py** accordingly(16th line of **ass_vote_utils.py**). For example you pick the 2nd account as your constructor,then you need to change the `w3.eth.accounts[0]` to `w3.eth.accounts[1]`.
+>>Of course you can also select another account you prefer, but then you need to change the constructor address in **assign_vote_utils.py** accordingly(16th line of **assign_vote_utils.py**). For example you pick the 2nd account as your constructor,then you need to change the `w3.eth.accounts[0]` to `w3.eth.accounts[1]`.
 
 
 **3.Obtain the address of deployed contract**
@@ -52,7 +52,7 @@ Two-Ways Ballot
 >>2.**leaders**,the addresses of leaders.You can select some accounts from accounts list and copy their address,for example,["addr1","addr2","addr3"].The number of leaders must equal the number of options.
 >>3.**points_per_voters**&**points_per_leaders**,points assigned to each voter and leader.
 
->>When you select the constructor to deploy the contract,you are free to choose any account in your list. but then you need to change the constructor address in **ass_vote_utils.py** accordingly(22th line of **ass_vote_utils.py**). For example you pick the 2nd account as your constructor,then you need to change the `w3.eth.accounts[0]` to `w3.eth.accounts[1]`.
+>>When you select the constructor to deploy the contract,you are free to choose any account in your list. but then you need to change the constructor address in **assign_vote_utils.py** accordingly(22th line of **assign_vote_utils.py**). For example you pick the 2nd account as your constructor,then you need to change the `w3.eth.accounts[0]` to `w3.eth.accounts[1]`.
   
 **3.Obtain the address of deployed contract**
 >Copy the address of the contract you just deployed(can be found in 'Deployed Contracts' on Remix)

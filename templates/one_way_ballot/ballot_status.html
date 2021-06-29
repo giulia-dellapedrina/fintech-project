@@ -1,55 +1,133 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Current Ballot Status</title>
-        <!--introduce echarts-->
-        <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
-        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-    </head>
-    <style>
-        a{font-family:monospace;
-          font-weight: bold;
-          font-size: 18px;
-        }
-    </style>
-    <body>
-        <a href="/">Back</a>
-        <br>
-        <br>
+<div class="topnav">
+
+    <a href="content.html">Home</a>
+    <a class="active" href="login.html">Vote</a>
+    <a href="ballot_status.html">Results</a>
+
+</div>
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Current Ballot Status</title>
+    <!--introduce echarts-->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class='container'>
         <div id="ballot status" style="width: 600px;height:400px;"></div>
         <script type="text/javascript">
 
-                var text='{{update|tojson}}';
-                var obj=JSON.parse(text);
-                var options=[];
-                for(var i=0;i<obj.length;i++){
-                    options.push(obj[i][0]);
-                }
-                var Series=[];
-                for(var i=0;i<obj.length;i++){ //use .length is not perfect though..
-                    var item={
-                        name:obj[i][0],
-                        type:"bar",
-                        data:[obj[i][1]]
-                    };
-                    Series.push(item);
-                }
-                //initialization of echarts obj
-                var myChart=echarts.init(document.getElementById('ballot status'), 'light');
-                // //set option
-                option={
-                    title:{text:"Ballot status",
-                            x:'left',
-                            textStyle:{fontSize:30,fontWeight:'bolder',color:'#333'}},
-                    tooltip:{},
-                    legend:{x:"right",y:"top",data:options},
-                    xAxis:[{type:"category",name:"Options",nameLocation:"middle"}],
-                    yAxis:[{type:"value",name:"Points",nameLocation:"middle"}],
-                    series:Series
+            var text = '{{update|tojson}}';
+            var obj = JSON.parse(text);
+            var options = [];
+            for (var i = 0; i < obj.length; i++) {
+                options.push(obj[i][0]);
+            }
+            var Series = [];
+            for (var i = 0; i < obj.length; i++) { //use .length is not perfect though..
+                var item = {
+                    name: obj[i][0],
+                    type: "bar",
+                    data: [obj[i][1]]
                 };
-                
-                myChart.setOption(option);
+                Series.push(item);
+            }
+            //initialization of echarts obj
+            var myChart = echarts.init(document.getElementById('ballot status'), 'light');
+            // //set option
+            option = {
+                title: {
+                    text: "Ballot status",
+                    x: 'left',
+                    textStyle: { fontSize: 25, fontWeight: 'bold', color: '#212529' }
+                },
+                tooltip: {},
+                legend: { x: "right", y: "top", data: options },
+                xAxis: [{ type: "category", name: "Options", nameLocation: "middle" }],
+                yAxis: [{ type: "value", name: "Points", nameLocation: "middle" }],
+                series: Series
+            };
+
+            myChart.setOption(option);
         </script>
-    </body>
+    </div>
+</body>
+
+<style>
+ h1 {
+        color: #212529;
+        text-align: left;
+        font-size: 25px;
+        padding: 2;
+    }
+
+    .link {
+        font-size: 20px;
+        color: black;
+    }
+
+    h3 {
+        color: #212529;
+        text-align: left;
+        font-size: 18px;
+        font-weight: normal;
+        margin-bottom: 8px;
+    }
+
+    .topnav {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    input[type=text] {
+        font-size: 14;
+        padding: 8px 10px;
+        border: 1px solid #212529;
+        border-radius: 4px;
+    }
+
+    input[type=submit] {
+        font-size: 14px;
+        background-color: white;
+        color: #0d6efd;
+        padding: 8px 10px;
+        border: 1px solid #0d6efd;
+        border-radius: 4px;
+    }
+
+    input[type=submit]:hover {
+        font-size: 14px;
+        background-color: #0d6efd;
+        color: white;
+        padding: 8px 10px;
+        border: 1px solid #0d6efd;
+        border-radius: 4px;
+    }
+
+    .container{
+        margin:auto;
+        width: 40%;
+        padding: 10px;
+    }
+</style>
+
 </html>
