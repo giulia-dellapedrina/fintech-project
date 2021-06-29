@@ -16,7 +16,11 @@
 <body>
     <div class='container'>
         <h1>Vote Below</h1>
+        <p> Before assiging your points please enter a 5 digit number password. This will be used to hash your votes. 
+        </p>
         <form method='post'>
+            <label>Personal key</label><br> 
+            <input type='text' name='Key' placeholder="Enter your 5 digit key..."><br><br>
             {% for option,point in data%}
             <label>{{option}}</label><br>
             <input type='text' name='{{option}}' placeholder="Enter your vote..."><br>

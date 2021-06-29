@@ -68,11 +68,18 @@ def vote(addr):
                 return render_template('vote.html',data=status_data,error_message='Wrong input type,Only integers are accepted!')
             elif int(point)>0:
                 vote_info[i]=int(point)
-    
-    option_idx=list(map(lambda x:int(x),vote_info.keys()))
-    point_allocation=list(vote_info.values())
+    key = request.form.get('Key')
+    if key:
+        if not key.isdigit():
+            return render_template('vote.html',error_message='Wrong input type,only integers are accepted for the personal key!')
+        elif not(len(key)==5):
+            return render_template('vote.html',error_message='Personal key must be 5 characters long!')
 
- 
+    key = int(key)
+   
+    option_idx = list(map(lambda x: w3.soliditySha3(['uint256','uint256'], [int(x), key]),vote_info.keys())) 
+    point_allocation=list(vote_info.values())
+    
     voter_info=vote_contract.functions.voters(addr).call()
     num_points_given=voter_info[0]
     if sum(point_allocation)!=num_points_given:
@@ -81,7 +88,7 @@ def vote(addr):
         vote_yet=voter_info[1]
         if vote_yet:
             return render_template('vote.html',data=status_data,error_message='You have already voted!')
-        vote_contract.functions.Vote(option_idx=option_idx,point_allocation=point_allocation).\
+        vote_contract.functions.Vote(option_idx=option_idx,point_allocation=point_allocation, key=key).\
             transact(transaction={"from":addr})
         
         return render_template('vote_done.html')

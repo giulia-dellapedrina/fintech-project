@@ -35,10 +35,10 @@ def two_ways_assign_vote(addr):
     So I set the voters from 4th account,here I simply set 5 voters, you are free to choose more voters, but be attention not to exceed the number of nodes in Ganache test
     environment...
     '''
-    num_voters=6
-    names=['Thomas','Jacopo','Giulia','Jiahao','Stefan','Simone'] #simple example
+    num_voters=5
+    names=['Thomas','Giulia','Jiahao','Stefan','Simone'] #simple example
     print('Start assigning votes to voters...')
-    for i in range(4,num_voters+5):
+    for i in range(4,num_voters+4):
         sorting_contract.functions.Give_right_to_voters(w3.eth.accounts[i],names[i-4]).transact(transaction={'from':w3.eth.accounts[0]})
     print('Assignment Done!')
     return w3,sorting_contract
