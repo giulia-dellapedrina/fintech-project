@@ -6,7 +6,7 @@ contract Ballot{
         uint voter_points; // totally z points
         bool voted; // whether or not voted
         address voter_addr; // address of voter
-        uint[] proposal_idx; //voted to which proposal
+        bytes32[] proposal_idx; //voted to which proposal
     }
     struct Option{
         string name; //name of optionq
@@ -18,7 +18,6 @@ contract Ballot{
     Option[] public Options; //array to store options with their current voted condition
     address[] public Valid_voter_address; //separately store all the addresses of authorized voters
 
-    uint public z;
     uint public num_options=0; //record the number of options
     uint public num_voters=0; //record the number of voters
 
@@ -30,6 +29,7 @@ contract Ballot{
             Options.push(Option({name:optionNames[i],count:0}));
             num_options++;
         }
+        
         deadline=block.timestamp+24*60*60; //once the voters have votes, the countdown starts, voters have to accomplish voting within one day.
 
     }
@@ -56,15 +56,15 @@ contract Ballot{
         return sum;
     }
     
-    function Vote(uint[] memory option_idx,uint[] memory point_allocation,uint key) public{
+    function Vote(bytes32[] memory option_idx,uint[] memory point_allocation,uint256 key) public{
         //option_idx: voter's decision about to choose which options
         //point_allocation: how to allocation the N points to above options
         
         Voter storage v=voters[msg.sender]; // voter object
         require(block.timestamp<deadline,"Voting has finished!");//should vote before deadline
-        for(uint i=0;i<option_idx.length;i++){
-            require(option_idx[i]<=Options.length-1,"Option index beyonds the upper bound!");
-        }
+        //for(uint i=0;i<option_idx.length;i++){
+          //  require(option_idx[i]<=Options.length-1,"Option index beyonds the upper bound!");
+        //}
         //check whether the option_idx beyond the max possible option idx
         require(Sum(point_allocation)==v.voter_points,"Sum of your votes you have not equal to the sum of your votes allocated!"); 
         //the sum of voter's point allocation must equal points assigned to him/her
@@ -73,9 +73,10 @@ contract Ballot{
         //v.voter_addr=msg.sender;
         v.proposal_idx=option_idx;
         
-        for(uint j=0;j<num_options;j++){
-            uint hash;
-            hash = uint(keccak256(abi.encodePacked(Options[j].name,key)));
+
+        for(uint256 j=0;j<num_options;j++){
+            bytes32 hash;
+            hash = keccak256(abi.encodePacked(j,key));
             for(uint i=0;i<option_idx.length;i++){
                 if (option_idx[i] == hash){
                     Options[j].count+=point_allocation[i]; // check needed
