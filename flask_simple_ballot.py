@@ -68,9 +68,16 @@ def vote(addr):
                 return render_template('vote.html',data=status_data,error_message='Wrong input type,Only integers are accepted!')
             elif int(point)>0:
                 vote_info[i]=int(point)
+    key = request.form.get('Key')
+    if key:
+        if not key.isdigit():
+            return render_template('vote.html',data=key,error_message='Wrong input type,Only integers are accepted!')
+        elif not(len(key)==5):
+            return render_template('vote.html',data=key,error_message='Peronal key must be 5 characters long!')
+
     
     #option_idx=list(map(lambda x:int(x),vote_info.keys()))
-    option_idx = list(map(lambda x: w3.soliditySha3(['string','uint'], [x, key]),vote_info.keys())) #need to check for the correct datatypes and function
+    option_idx = list(map(lambda x: w3.soliditySha3(['uint','uint'], [x, key]),vote_info.keys())) #need to check for the correct datatypes and function
     point_allocation=list(vote_info.values())
 
  
