@@ -12,14 +12,13 @@ def one_way_ass_vote(addr): #addr means the address of smart contract
     '''
     Here I just set number of voters and amount assigned to each voter both equal 5,you are free to change them.
     But notice that the num_voters should not exceed the number of node in Ganache test environment!!!
-    Note-Giulia: changed the formula so that the z points are decided once the contract is deployed, rather than here.
-    the number of voters is still decided here
+    
     '''
     num_voters=5
-
+    amount_per_voter = 5
     print('Start assigning votes...')
     for i in range(1,num_voters+1):
-        vote_contract.functions.Give_right_to_voters(w3.eth.accounts[i]).transact(transaction={'from':w3.eth.accounts[0]})#here i use the first address-->w3.eth.accounts[0] as the contract constructor 
+        vote_contract.functions.Give_right_to_voters(w3.eth.accounts[i],amount_per_voter).transact(transaction={'from':w3.eth.accounts[0]})#here i use the first address-->w3.eth.accounts[0] as the contract constructor 
     print('Assignment Done!')
     return w3,vote_contract
 

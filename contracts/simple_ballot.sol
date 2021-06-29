@@ -18,6 +18,7 @@ contract Ballot{
     Option[] public Options; //array to store options with their current voted condition
     address[] public Valid_voter_address; //separately store all the addresses of authorized voters
 
+    uint public z;
     uint public num_options=0; //record the number of options
     uint public num_voters=0; //record the number of voters
 
@@ -37,7 +38,7 @@ contract Ballot{
         require(msg.sender==chairperson); //must done by chairperson
         require(!voters[voter].voted); 
         require(voters[voter].voter_points==0); 
-        voters[voter].voter_points=points; //give voter N points for this new ballot
+        voters[voter].voter_points=points; //give voter z points for this new ballot
         voters[voter].voter_addr=voter;
 
         Valid_voter_address.push(voter); //store the address

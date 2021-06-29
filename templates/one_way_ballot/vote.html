@@ -36,30 +36,12 @@
         <a href="/">Back</a>
         <br>
         <br>
-        <h1>Personal key</h1>
-        <p> Please enter a 5 digit password. This will be used to hash your votes
+        <h1>Vote Below</h1>
+        <p> Before assiging your points please enter a 5 digit password. This will be used to hash your votes. 
         </p>
         <form method='post'>
-            <input type='text' name='Key' placeholder="Enter your 5 digit key...">
-            <input type="submit" value="Submit">
-        </form>
-        <script type="text/javascript">
-            var error_msg='{{error_message | safe}}';
-            //console.log(error_msg);
-            function error_alert(msg){
-                if(msg!=''){
-                    alert(msg);
-                }
-            }
-            error_alert(error_msg);
-        </script>
-    </body>
-    <body>
-        <a href="/">Back</a>
-        <br>
-        <br>
-        <h1>Vote Below</h1>
-        <form method='post'>
+            <label>Personal key</label><br> 
+            <input type='text' name='Key' placeholder="Enter your 5 digit key..."><br>
             {% for option,point in data%}
                 <label>{{option}}</label><br>
                 <input type='text' name='{{option}}' placeholder="Enter your vote..."><br>
