@@ -1,23 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Welcome</title>
-    </head>
+    <div class="topnav"> 
+
+        <a class="active" href="#content.html">Home</a>
+        <a href="login.html">Vote</a>
+        <a href="ballot_status.html">Results</a>
+
+      </div>
+
+    <body>
+        <div class='container'>
+            <head>
+                <meta charset="utf-8">
+                <h1>Welcome to our Fintech Project!</h1>
+                <h2>This is the second part of the project</h2>
+            </head>
+
+
+            <h3>READ ME of Project!</h3>
+            
+            <h4> 0. Ganache Installation </h4>   
+            <p>Install the Ganache and then open it, it will help you to create a local blockchain environment with some test nodes.</p>   
+            
+            <h4> 1. Compile Contract </h4>   
+            <p>Go to the Remix IDE (https://remix.ethereum.org/) and compile the vote.sol</p>  
+            
+            <h4> 2. Deploy Contract </h4>
+                <ul>
+                    <li>Change the Remix IDE environment to Web3 Provider and enter the Ganache default server address:HTTP://127.0.0.1:7545, then you can find that the account addresses listed on Remix page correspond to the nodes in your Ganache local environment.</li>
+                    <li>Next you can choose the first account in the list(which will then be the constructor of the contract, who has the right to assign vote to voters) to deploy the smart contract(need to pass the parameter---optionNames. For example,["a","b","c"]).</li>
+                    <li>Of course you can also select another account you prefer, but then you need to change the constructor address in assign_vote.py accordingly(16th line of assign_vote.py). For example you pick the 2nd account as your constructor,then you need to change the w3.eth.accounts[0] to w3.eth.accounts[1].</li>
+                </ul> 
+          
+            <h4> 3. Obtain the address of deployed contract </h4>   
+            <p> Copy the address of the contract you just deployed(can be found in 'Deployed Contracts' on Remix)</p>
+          
+            <h4> 4. Assign Votes&Run App </h4>   
+            <ul>
+                <li>Then you can run the flask app by entering following statements in your terminal:</li>
+                <li>python3 flask_app.py 'addr'</li>
+                <li>Here the addr is the address you copied in step 3.</li>
+            </ul>
+          
+            <h4> 5. Vote via browser </h4>   
+            <p> For those accounts which are assigned votes(accounts can be found either in Ganache or on Remix), they can login and vote via browser.</p>
+          
+          </div>
+    </body>
+
     <style>
-        h1 {color:red;
+        h1 {color:#212529;
+            text-align: center;
             font-size:40px;
-            font-family:monospace;}
+            padding: 25px;}
         .link {font-size:20px;
                color:black;}
-    </style>
-    <body>
-        <h1>Ethereum Voting App2</h1>
-        <ul>
-            <li class='link'><a href="ballot_status.html">Current Ballout Status</a></li>
-            <li class='link'><a href="login.html">Logic and Vote!</a></li>
-    
-        </ul>
 
-    </body>
+        h3 {color:#212529;
+            text-align: left;
+            font-size:20px;
+            padding-left: 15px;}
+
+        .topnav {
+            background-color: #333;
+            overflow: hidden;}
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;}
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;}
+    </style>
+
 </html>

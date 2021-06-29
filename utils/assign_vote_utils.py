@@ -3,7 +3,7 @@ import json
 import sys
 from flask import Flask
 
-def one_way_ass_vote(addr): #addr means the address of smart contract
+def one_way_assign_vote(addr): #addr means the address of smart contract
     w3=Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545")) 
     with open('utils/abi/one_way_abi.json','r') as f:
         abi=json.load(f)
@@ -22,7 +22,7 @@ def one_way_ass_vote(addr): #addr means the address of smart contract
     return w3,vote_contract
 
 
-def two_ways_ass_vote(addr):
+def two_ways_assign_vote(addr):
     w3=Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545")) 
     with open('utils/abi/two_ways_abi.json','r') as f:
         abi=json.load(f)
@@ -35,10 +35,10 @@ def two_ways_ass_vote(addr):
     So I set the voters from 4th account,here I simply set 5 voters, you are free to choose more voters, but be attention not to exceed the number of nodes in Ganache test
     environment...
     '''
-    num_voters=5
-    names=['a','b','c','d','e'] #simple example
+    num_voters=6
+    names=['Thomas','Jacopo','Giulia','Jiahao','Stefan','Simone'] #simple example
     print('Start assigning votes to voters...')
-    for i in range(4,num_voters+4):
+    for i in range(4,num_voters+5):
         sorting_contract.functions.Give_right_to_voters(w3.eth.accounts[i],names[i-4]).transact(transaction={'from':w3.eth.accounts[0]})
     print('Assignment Done!')
     return w3,sorting_contract
