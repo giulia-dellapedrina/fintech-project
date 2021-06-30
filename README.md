@@ -64,3 +64,14 @@ Here the addr is the address you copied in step 3.
  
 **5.Vote via browser**
 >For those accounts which are assigned votes(accounts can be found either in Ganache or on Remix), they can login and vote via browser.
+
+Privacy considerations
+----------
+
+**Simple Ballot**
+>In order to make it more difficult for people to know how individual voters have votes, we implemented a simple system using hashing function with a personal key. On the same page as the voting, the voter is asked to insert a personal key (5 digit long) which will then be used to hash their voting preferences before they are sent to the smart contract. In this way, their answers are hashed in a unique way based on the key they choose. The contract is set up so that what is stored in the voter variables is a hashed version of the option the voter has chosen, and only when points are assigned the key is used to find the options the voter has chosen. Although the assignment operation is public since the it done on the chain, the storing of hashed option chosen makes it more difficult to understand how an individual address has voted by inspecting the voter structure variables. 
+
+>We also considered implementing a more evolved approach, such as commit-reveal schemes which would keep all votes hidden until they are revealed, but could not since it went against the nature of the election. A solution like this would involve the voter having to submit information at two different points in time, first when they vote and also at the end of the voting session in order to reveal the votes. This would need a higher commitment from voters, as well as not allowing us to update the status in real time.
+
+**Two Way Ballot**
+>In this case we did not implement the same privacy as before, since the pairs voting is public on the ballot status page graph.
